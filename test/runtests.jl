@@ -17,6 +17,7 @@ end
   @test roundtrip_equal(nothing)
   @test roundtrip_equal(1)
   @test roundtrip_equal(Dict(:a => 1,:b => 2))
+  # @test roundtrip_equal(IdDict("a"=> 1,"b" => 2))
   @test roundtrip_equal(UInt8[1,2,3])
   @test roundtrip_equal("b")
   @test roundtrip_equal([1,"b"])

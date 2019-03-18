@@ -7,10 +7,9 @@ using Core: SimpleVector, TypeName
 
 struct BSONDict <: AbstractDict{Symbol,Any}
   d::Dict{Symbol,Any}
+  BSONDict(v...) = new(Dict{Symbol,Any}(v...))
 end
 # implement some of the needed Dict methods
-BSONDict(v) = BSONDict(Dict{Symbol,Any}(v))
-BSONDict(v...) = BSONDict(Dict{Symbol,Any}(v...))
 Base.length(bd::BSONDict) = length(bd.d)
 Base.isempty(bd::BSONDict) = length(bd.d)==0
 Base.setindex!(bd::BSONDict, v, k) = setindex!(bd.d, v, k)
@@ -20,7 +19,19 @@ Base.iterate(bd::BSONDict, i) = iterate(bd.d, i)
 Base.get(bd::BSONDict, k, d) = get(bd.d, k, d)
 Base.delete!(bd::BSONDict, k) = delete!(bd.d, k)
 
-const BSONArray = Vector{Any}
+struct BSONArray <: DenseArray{Any,1}
+  v::Vector{Any}
+  BSONArray(v...) = new(Vector{Any}(v...))
+end
+
+# Base.length(bd::BSONArray) = length(bd.v)
+# Base.size(bd::BSONArray) = size(bd.v)
+# Base.isempty(bd::BSONArray) = length(bd.v)==0
+# Base.setindex!(bd::BSONArray, v, k) = setindex!(bd.v, v, k)
+# Base.getindex(bd::BSONArray, k) = getindex(bd.v, k)
+# Base.iterate(bd::BSONArray) = iterate(bd.v)
+# Base.iterate(bd::BSONArray, i) = iterate(bd.v, i)
+
 const Primitive = Union{Nothing,Bool,Int32,Int64,Float64,String,Vector{UInt8},BSONDict,BSONArray}
 
 @enum(BSONType::UInt8,
